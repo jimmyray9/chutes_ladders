@@ -69,12 +69,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
             square.setAttribute("class", "square");
             // add additional classes for special squares
             if (chutesLadders[i]) {
-                square.classList.add('ladder', 'red');
+                // square.classList.add('ladder', 'red');
+                if (chutesLadders[i] > i) {
+                    square.classList.add('ladder', 'green');
+                } else {
+                    square.classList.add('chute', 'red');
+                }
             }
             //reverse the row direction for alternating rows
-            if ((i + "").split('')[0] % 2 == 0) {
-                square.classList.add('reverse');
-            }
+            // if ((i + "").split('')[0] % 2 == 0) {
+            //     square.classList.add('reverse');
+            // }
 
             gameBoard.prepend(square);
             square.appendChild(text);
@@ -83,7 +88,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
         // ladders
 
-        // shutes
+        // chutes
     }
 
 
@@ -96,9 +101,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
         if (players.player1Turn) {
             let newPosition = document.querySelector(`div[data='${players.player1}'] > div.pieceSpace1`);
             newPosition.classList.add('player1Piece');
+            newPosition.scrollIntoView({behavior: "smooth", block: "center"});
         } else {
             let newPosition = document.querySelector(`div[data='${players.player2}'] > div.pieceSpace2`);
             newPosition.classList.add('player2Piece');
+            newPosition.scrollIntoView({behavior: "smooth", block: "center"});
         }
         
     }
