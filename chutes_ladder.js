@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     function choosePieces() {
         // piece selection for players 
-        let selections = ['piece-1.svg','piece-2.svg','piece-3.svg','piece-4.svg','piece-5.svg','piece-6.svg','piece-7.svg','piece-8.svg','piece-9.svg'];
+        let selections = ['piece-1.svg','piece-2.svg','piece-3.svg','piece-4.svg','piece-5.svg','piece-6.svg','piece-7.svg','piece-8.svg'];
         for (let i = 0; i != 4; ++i) {
             let piece = document.createElement('img');
             piece.classList.add('player1', 'piece');

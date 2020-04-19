@@ -15,7 +15,18 @@ body {
     box-sizing: border-box;
 }
 
-.piece:hover {
+.themes {
+    display: flex;
+    flex-direction: column;
+    align-content: space-evenly;
+}
+
+.themes h3 {
+    margin: 5px;
+    box-sizing: border-box;
+}
+
+.piece:hover, .themes h3:hover {
     border-bottom: 2px solid red;
     border-top: 2px solid red;
 }
