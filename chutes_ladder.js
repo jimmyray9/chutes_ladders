@@ -37,6 +37,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const dice1Image = document.getElementsByClassName('dice-1')[0];
     const dice2Image = document.getElementsByClassName('dice-2')[0];
     const diceButton = document.getElementById('rollDice');
+    const player1Choices = document.getElementsByClassName('player1choices')[0];
+    const player2Choices = document.getElementsByClassName('player2choices')[0];
     
     diceButton.onclick = rollDie;
 
@@ -46,12 +48,35 @@ window.addEventListener('DOMContentLoaded', (event) => {
         players.player1 = 1;
         players.player2 = 1;
         players.player1Turn = true;
+        choosePieces()
         generateBoard();
         displayPositions();
     }
 
+    function choosePieces() {
+        // piece selection for players 
+        let selections = ['piece-1.svg','piece-2.svg','piece-3.svg','piece-4.svg','piece-5.svg','piece-6.svg','piece-7.svg','piece-8.svg','piece-9.svg'];
+        for (let i = 0; i != 4; ++i) {
+            let piece = document.createElement('img');
+            piece.classList.add('player1', 'piece');
+            piece.src = './images/' + selections.pop();
+            piece.setAttribute('data-piece-1', piece.src.replace(window.location.href, ""))
+            player1Choices.append(piece);    
+        }
+        for (let i = 0; i != 4; ++i) {
+            let piece = document.createElement('img');
+            piece.classList.add('player2', 'piece');
+            piece.src = './images/' + selections.pop();
+            piece.setAttribute('data-piece-2', piece.src.replace(window.location.href, ""))
+            player2Choices.append(piece);            
+        }
+        player1Choices.onclick = function() {
+            console.log(this)
+        }
+    }
+
     function generateBoard() {
-        // squares for board -- maybe flex order? 
+        // squares for the board - perhaps use flex order?
         for (let i = 1; i != 101; ++i) {
             let square = document.createElement("div");
             square.setAttribute('data', i)
@@ -85,6 +110,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             square.appendChild(text);
             square.appendChild(image);
             square.appendChild(image2);
+            
         }
         // ladders
 
@@ -102,6 +128,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             let newPosition = document.querySelector(`div[data='${players.player1}'] > div.pieceSpace1`);
             newPosition.classList.add('player1Piece');
             newPosition.scrollIntoView({behavior: "smooth", block: "center"});
+            console.log("offesetTop:", newPosition.offsetTop)
         } else {
             let newPosition = document.querySelector(`div[data='${players.player2}'] > div.pieceSpace2`);
             newPosition.classList.add('player2Piece');
@@ -183,6 +210,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             players.player2 += num;
         }
     }
-    
+       
     initializeGame();
 });
