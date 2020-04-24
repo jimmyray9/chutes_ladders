@@ -50,7 +50,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         players.player1 = 1;
         players.player2 = 1;
         players.player1Turn = true;
-        choosePieces("circus")
+        choosePieces("lego")
         generateBoard();
         displayPositions();
         pieces.player1Piece = document.getElementById('player1Piece');
@@ -100,9 +100,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 let piece1 = document.createElement('img')
                 let piece2 = document.createElement('img')
                 piece1.id = 'player1Piece';
-                piece1.src = '/images/circus/piece-7.svg';
+                piece1.src = '/images/lego/piece-7.svg';
                 piece2.id = 'player2Piece';
-                piece2.src = '/images/circus/piece-3.svg';
+                piece2.src = '/images/lego/piece-3.svg';
                 image.appendChild(piece1);
                 image.appendChild(piece2);
             }
