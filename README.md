@@ -12,7 +12,7 @@ The game is simple enough but I wanted a visualization of the game instead of pl
 ![Screenshot](/images/screenshot.png)
 
 ### Areas of improvement
-~~1. Allowing players to choose a piece~~
+1. ~~Allowing players to choose a piece~~
 2. Allowing players to upload a picture of them to use as the piece
 3. Build the chute from one square to another
 4. Build the ladder from one square to another
