@@ -39,40 +39,52 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const diceButton = document.getElementById('rollDice');
     const player1Choices = document.getElementsByClassName('player1choices')[0];
     const player2Choices = document.getElementsByClassName('player2choices')[0];
-    
+    const pieces = {};
+    const underwater = document.getElementById('underwater');
+        
     diceButton.onclick = rollDie;
-
+    // underwater.addEventListener('click', choosePieces("underwater")); loads this theme along with the initial theme without a click
 
 
     function initializeGame() {
         players.player1 = 1;
         players.player2 = 1;
         players.player1Turn = true;
-        choosePieces()
+        choosePieces("circus")
         generateBoard();
         displayPositions();
-    }
+        pieces.player1Piece = document.getElementById('player1Piece');
+        pieces.player2Piece = document.getElementById('player2Piece');
+   }
 
-    function choosePieces() {
-        // piece selection for players 
+    function choosePieces(theme) {
+        // piece selection for players
         let selections = ['piece-1.svg','piece-2.svg','piece-3.svg','piece-4.svg','piece-5.svg','piece-6.svg','piece-7.svg','piece-8.svg'];
         for (let i = 0; i != 4; ++i) {
             let piece = document.createElement('img');
             piece.classList.add('player1', 'piece');
-            piece.src = './images/' + selections.pop();
+            piece.src = './images/' + `${theme}/` + selections.pop();
+            piece.setAttribute('data-num', i + 1);
             piece.setAttribute('data-piece-1', piece.src.replace(window.location.href, ""))
             player1Choices.append(piece);    
         }
         for (let i = 0; i != 4; ++i) {
             let piece = document.createElement('img');
             piece.classList.add('player2', 'piece');
-            piece.src = './images/' + selections.pop();
+            piece.src = './images/' + `${theme}/` + selections.pop();
+            piece.setAttribute('data-num', i);
             piece.setAttribute('data-piece-2', piece.src.replace(window.location.href, ""))
             player2Choices.append(piece);            
         }
-        player1Choices.onclick = function() {
-            console.log(this)
-        }
+        player1Choices.addEventListener('click', function(event) {
+            const player1Piece = document.getElementById('player1Piece');
+            player1Piece.setAttribute('src', event.target.src);
+         });
+
+         player2Choices.addEventListener('click', function(event) {
+            const player2Piece = document.getElementById('player2Piece');
+            player2Piece.setAttribute('src', event.target.src);
+         });
     }
 
     function generateBoard() {
@@ -83,12 +95,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
             let text = document.createElement('h4')
             text.innerText = i;
             let image = document.createElement("div")
-            image.classList.add('pieceSpace1')
-            let image2 = document.createElement("div")
-            image2.classList.add('pieceSpace2')
+            image.classList.add('piecesSpace')
             if (i == 1) {
-                image.classList.add('player1Piece')
-                image2.classList.add('player2Piece')
+                let piece1 = document.createElement('img')
+                let piece2 = document.createElement('img')
+                piece1.id = 'player1Piece';
+                piece1.src = '/images/circus/piece-7.svg';
+                piece2.id = 'player2Piece';
+                piece2.src = '/images/circus/piece-3.svg';
+                image.appendChild(piece1);
+                image.appendChild(piece2);
             }
             
             square.setAttribute("class", "square");
@@ -109,7 +125,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             gameBoard.prepend(square);
             square.appendChild(text);
             square.appendChild(image);
-            square.appendChild(image2);
+            
             
         }
         // ladders
@@ -125,13 +141,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     function movePiece(totalRoll) {
         if (players.player1Turn) {
-            let newPosition = document.querySelector(`div[data='${players.player1}'] > div.pieceSpace1`);
-            newPosition.classList.add('player1Piece');
+            let newPosition = document.querySelector(`div[data='${players.player1}'] > div.piecesSpace`);
+            newPosition.appendChild(pieces.player1Piece);
             newPosition.scrollIntoView({behavior: "smooth", block: "center"});
             console.log("offesetTop:", newPosition.offsetTop)
         } else {
-            let newPosition = document.querySelector(`div[data='${players.player2}'] > div.pieceSpace2`);
-            newPosition.classList.add('player2Piece');
+            let newPosition = document.querySelector(`div[data='${players.player2}'] > div.piecesSpace`);
+            newPosition.appendChild(pieces.player2Piece);
             newPosition.scrollIntoView({behavior: "smooth", block: "center"});
         }
         
@@ -139,11 +155,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     function removePiece() {
         if (players.player1Turn) {
-            let initialPosition = document.querySelector(`div[data='${players.player1}'] > div.pieceSpace1`);
-            initialPosition.classList.remove('player1Piece');
+            document.getElementById('player1Piece').remove()
         } else {
-            let initialPosition = document.querySelector(`div[data='${players.player2}'] > div.pieceSpace2`);
-            initialPosition.classList.remove('player2Piece');
+            document.getElementById('player2Piece').remove()
         }
     }
 
@@ -173,7 +187,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
         displayPositions();
         checkWinner();
     }
-     
+
+        
     function checkDoubles( die1, die2) {
         if (die1 == die2) {
             return

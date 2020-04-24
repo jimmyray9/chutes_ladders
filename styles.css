@@ -60,15 +60,16 @@ body {
     border: 2px solid black;
     display: flex;
     flex-flow: row wrap;
+    overflow: hidden;
 }
 
 .ladder {
     display: flex;
 }
 
-.chute {
+  .chute {
     display: flex;
-    /* overflow: hidden; */
+        /* overflow: hidden; */
 }
 
 .ladder::after {
@@ -77,6 +78,7 @@ body {
     height: 30px;
     align-self: flex-end;
     background-color: green;
+    opacity: 0.6;
 }
 
 .chute::after {
@@ -85,6 +87,7 @@ body {
     height: 30px;
     align-self: flex-end;
     background-color: red;
+    opacity: 0.6;
 }
 
 .position {
@@ -121,19 +124,15 @@ h4 {
     flex: 1 100%;
 }
 
-.pieceSpace1, .pieceSpace2 {
+.piecesSpace {
     height: 50px;
+    width: 100px;
+    display: flex;
+}
+
+#player1Piece, #player2Piece {
     width: 50px;
-    background-position: center;
-    background-size: cover;
-}
-
-.player1Piece {
-    background-image: url('./images/piece-7.svg');
-}
-
-.player2Piece {
-    background-image: url('./images/piece-4.svg');
+    height: 50px;
 }
 
 .footer {
