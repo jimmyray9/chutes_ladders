@@ -40,11 +40,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const player1Choices = document.getElementsByClassName('player1choices')[0];
     const player2Choices = document.getElementsByClassName('player2choices')[0];
     const pieces = {};
-    const underwater = document.getElementById('underwater');
         
     diceButton.onclick = rollDie;
-    // underwater.addEventListener('click', choosePieces("underwater")); loads this theme along with the initial theme without a click
-
 
     function initializeGame() {
         players.player1 = 1;
@@ -53,12 +50,22 @@ window.addEventListener('DOMContentLoaded', (event) => {
         choosePieces("lego")
         generateBoard();
         displayPositions();
+        //Need to wait until after the page has loaded otherwise the following will be undefined
         pieces.player1Piece = document.getElementById('player1Piece');
         pieces.player2Piece = document.getElementById('player2Piece');
+        pieces.theme = document.getElementsByClassName('themes')[0];
+        pieces.theme.addEventListener('click', e => choosePieces(e.toElement.innerText))
    }
 
     function choosePieces(theme) {
-        // piece selection for players
+        // remove previous icons if not text
+        while (player1Choices.lastChild.tagName != "H3") {
+            player1Choices.lastChild.remove();
+        }
+        while (player2Choices.lastChild.tagName != "H3") {
+            player2Choices.lastChild.remove();
+        }
+        //load up the theme icons
         let selections = ['piece-1.svg','piece-2.svg','piece-3.svg','piece-4.svg','piece-5.svg','piece-6.svg','piece-7.svg','piece-8.svg'];
         for (let i = 0; i != 4; ++i) {
             let piece = document.createElement('img');
@@ -76,6 +83,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             piece.setAttribute('data-piece-2', piece.src.replace(window.location.href, ""))
             player2Choices.append(piece);            
         }
+        //set the player pieces
         player1Choices.addEventListener('click', function(event) {
             const player1Piece = document.getElementById('player1Piece');
             player1Piece.setAttribute('src', event.target.src);
@@ -85,6 +93,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             const player2Piece = document.getElementById('player2Piece');
             player2Piece.setAttribute('src', event.target.src);
          });
+
+         
     }
 
     function generateBoard() {
@@ -96,6 +106,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             text.innerText = i;
             let image = document.createElement("div")
             image.classList.add('piecesSpace')
+            // add the pieces to square 1
             if (i == 1) {
                 let piece1 = document.createElement('img')
                 let piece2 = document.createElement('img')
@@ -110,7 +121,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             square.setAttribute("class", "square");
             // add additional classes for special squares
             if (chutesLadders[i]) {
-                // square.classList.add('ladder', 'red');
                 if (chutesLadders[i] > i) {
                     square.classList.add('ladder', 'green');
                 } else {
@@ -121,12 +131,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             // if ((i + "").split('')[0] % 2 == 0) {
             //     square.classList.add('reverse');
             // }
-
             gameBoard.prepend(square);
             square.appendChild(text);
             square.appendChild(image);
-            
-            
         }
         // ladders
 
