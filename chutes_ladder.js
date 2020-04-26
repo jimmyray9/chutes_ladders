@@ -40,6 +40,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const player1Choices = document.getElementsByClassName('player1choices')[0];
     const player2Choices = document.getElementsByClassName('player2choices')[0];
     const pieces = {};
+    const buzzer = new Audio('./sounds/buzzer.wav');
+    const laser = new Audio('./sounds/laser.wav');
         
     diceButton.onclick = rollDie;
 
@@ -151,7 +153,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             let newPosition = document.querySelector(`div[data='${players.player1}'] > div.piecesSpace`);
             newPosition.appendChild(pieces.player1Piece);
             newPosition.scrollIntoView({behavior: "smooth", block: "center"});
-            console.log("offesetTop:", newPosition.offsetTop)
         } else {
             let newPosition = document.querySelector(`div[data='${players.player2}'] > div.piecesSpace`);
             newPosition.appendChild(pieces.player2Piece);
@@ -168,15 +169,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
     }
 
-    function checkChutesLadders() {
+    function checkChutesLadders(totalRoll) {
         if (players.player1Turn && chutesLadders[`${players.player1}`]) {
-            console.log(`Hit a chute/ladder! Was at ${players.player1}... `)
-            players.player1 = chutesLadders[`${players.player1}`]
-            console.log(`and now at ${players.player1}`)
+            console.log(`Hit a chute/ladder! Was at ${players.player1}... `);
+            (chutesLadders[`${players.player1}`] > players.player1) ? laser.play() : buzzer.play();
+            players.player1 = chutesLadders[`${players.player1}`];
+            console.log(`and now at ${players.player1}`);
         } else if (chutesLadders[`${players.player2}`]) {
-            console.log(`Hit a chute/ladder! Was at ${players.player1}... `)
-            players.player2 = chutesLadders[`${players.player2}`]
-            console.log(`and now at ${players.player1}`)
+            console.log(`Hit a chute/ladder! Was at ${players.player2}... `);
+            (chutesLadders[`${players.player2}`] > players.player2) ? laser.play() : buzzer.play();
+            players.player2 = chutesLadders[`${players.player2}`];
+            console.log(`and now at ${players.player2}`)
         }
     }
 
@@ -188,7 +191,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         let totalRoll = dieRoll1 + dieRoll2;
         removePiece();
         checkOver(totalRoll);
-        checkChutesLadders();
+        checkChutesLadders(totalRoll);
         movePiece(totalRoll);
         checkDoubles(dieRoll1, dieRoll2);
         displayPositions();
