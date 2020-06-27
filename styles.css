@@ -8,12 +8,13 @@ body {
     margin: 30px auto 30px 250px;
 } 
 
+/* selecting pieces menu */
 .piece {
     width: 55px;
     height: 55px;
     padding: 5px;
     box-sizing: border-box;
-}
+   }
 
 .themes {
     display: flex;
@@ -36,11 +37,13 @@ body {
     border: 2px solid black;
     padding: 15px;
     border-radius: 8px;
+   
 }
 
 .player1choices h3, .player2choices h3 {
     text-align: center;
 }
+
 .iconSelection {
     display: flex;
     justify-content: space-around;
@@ -48,6 +51,7 @@ body {
     margin-bottom: 2em;
 }
 
+/* gameboard componants */
 .gameboard {
     display: flex;
     flex-wrap: wrap;
@@ -136,6 +140,7 @@ h4 {
     height: 50px;
 }
 
+/* sidebar */
 .footer {
     position: fixed;
     display: flex;
